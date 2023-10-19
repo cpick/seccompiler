@@ -316,6 +316,17 @@ pub fn apply_filter(bpf_filter: BpfProgramRef) -> Result<()> {
     apply_filter_with_flags(bpf_filter, 0)
 }
 
+/// Apply a BPF filter to the calling thread and log non-Allow actions.
+///
+/// # Arguments
+///
+/// * `bpf_filter` - A reference to the [`BpfProgram`] to be installed.
+///
+/// [`BpfProgram`]: type.BpfProgram.html
+pub fn apply_filter_with_logging(bpf_filter: BpfProgramRef) -> Result<()> {
+    apply_filter_with_flags(bpf_filter, libc::SECCOMP_FILTER_FLAG_LOG)
+}
+
 /// Apply a BPF filter to the all threads in the process via the TSYNC feature. Please read the
 /// man page for seccomp (`man 2 seccomp`) for more information.
 ///
